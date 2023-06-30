@@ -1,0 +1,7 @@
+"bwa": "/home/zhuosl/miniconda3/envs/spades/share/spades-3.11.1-4/bin/bwa-spades"
+"dataset": "/home/zhuosl/CE_WGS/WGS data for Jay/WGS data for Jay/spades-careful-assembly2/input_dataset.yaml"
+"log_filename": "log.properties"
+"max_nthreads": !!int "6"
+"output_dir": "/home/zhuosl/CE_WGS/WGS data for Jay/WGS data for Jay/spades-careful-assembly2/mismatch_corrector/scaffolds"
+"strategy": "mapped_squared"
+"work_dir": "/home/zhuosl/CE_WGS/WGS data for Jay/WGS data for Jay/spades-careful-assembly2/tmp/corrector_1da96s84"

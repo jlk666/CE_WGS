@@ -1,0 +1,6 @@
+- "left reads":
+  - "/home/zhuosl/CE_WGS/WGS data for Jay/WGS data for Jay/CE1_S55_L002_R1_001.fastq.gz"
+  "orientation": "fr"
+  "right reads":
+  - "/home/zhuosl/CE_WGS/WGS data for Jay/WGS data for Jay/CE1_S55_L002_R2_001.fastq.gz"
+  "type": "paired-end"

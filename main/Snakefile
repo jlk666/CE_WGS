@@ -1,0 +1,23 @@
+SAMPLES, = glob_wildcards("/home/zhuosl/CE_WGS/main/raw_data/{sample}_R1_001.fastq.gz")
+print(SAMPLES)
+rule all:
+    input:
+        expand("/home/zhuosl/CE_WGS/main/Genome_assembly/spades_{sample}/contigs.fasta", sample=SAMPLES)
+
+rule annotate_genome:
+    message:
+        "de novo assembly CE_isolates using SPADES"
+    input:
+        R1 = "/home/zhuosl/CE_WGS/main/raw_data/{sample}_R1_001.fastq.gz",
+        R2 = "/home/zhuosl/CE_WGS/main/raw_data/{sample}_R2_001.fastq.gz"
+    output:
+        contigs = "/home/zhuosl/CE_WGS/main/Genome_assembly/spades_{sample}/contigs.fasta"
+    params:
+        outdir = "/home/zhuosl/CE_WGS/main/Genome_assembly/spades_{sample}"
+    threads: 32
+    conda:
+        "/home/zhuosl/CE_WGS/main/spades.yml"
+    shell:
+        """ 
+        spades.py -1 {input.R1} -2 {input.R2} -o {params.outdir} -t {threads} --only-assembler --careful
+        """

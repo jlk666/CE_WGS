@@ -1,6 +1,28 @@
 SAMPLES, = glob_wildcards("/home/zhuosl/CE_WGS/main/raw_data/{sample}_R1_001.fastq.gz")
-print(SAMPLES)
+CONTIGS, = glob_wildcards("/home/zhuosl/CE_WGS/main/Genome_contig/{contig}.fasta")
+
 rule all:
+    input:
+        expand("/home/zhuosl/CE_WGS/main/Genome_signature/signature_{contig}.sig", contig=CONTIGS)
+
+rule signature_generator:
+    message:
+        "signature generator of assembled contigs using sourmash"
+    input:
+        contigg = "/home/zhuosl/CE_WGS/main/Genome_contig/{contig}.fasta",
+    output:
+        signature = "/home/zhuosl/CE_WGS/main/Genome_signature/signature_{contig}.sig"
+    params:
+        outdir = "/home/zhuosl/CE_WGS/main/Genome_signature/"
+    threads: 32
+    conda:
+        "/home/zhuosl/CE_WGS/main/smash.yml"
+    shell:
+        """ 
+        sourmash sketch dna -p scaled=10000,k=31 {input.contigg} -o {output.signature}
+        """
+
+rule annotate:
     input:
         expand("/home/zhuosl/CE_WGS/main/Genome_assembly/spades_{sample}/contigs.fasta", sample=SAMPLES)
 

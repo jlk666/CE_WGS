@@ -1,5 +1,5 @@
 # Background
-
+Report of current progress can be found [here](https://hackmd.io/@g4P5SSbiSriJQ-hJMcd9fg/B1G7mEp_h).
 | Isolate ID | CE ID | Sample Name | WGS Identification | Percent identity | Inhibition zone (diameter in mm) | SD |
 | --- | --- | --- | --- | --- | --- | --- |
 | CE20 | CM1 | S-d0-RL3-1-1 S | Carnobacterium maltaromaticum | 84.22 | 12.25 | 2.62995564 |

@@ -1,0 +1,9 @@
+# Ignore .err and .out files
+*.err
+*.out
+*.zip
+*.gz
+# Ignore raw genome directory
+Genome_assembly/
+#Ignore README.md
+.snakemake

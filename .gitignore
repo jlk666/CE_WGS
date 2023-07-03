@@ -6,5 +6,6 @@
 # Ignore raw genome directory
 Genome_assembly/
 Genome_contig/
+Genome_annotation/
 #Ignore README.md
 .snakemake

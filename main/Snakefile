@@ -22,16 +22,15 @@ rule signature_generator:
         sourmash sketch dna -p scaled=10000,k=31 {input.contigg} -o {output.signature}
         """
 
-rule annotate:
+rule assemble:
     input:
-        expand("/home/zhuosl/CE_WGS/main/Genome_assembly/spades_{sample}/contigs.fasta", sample=SAMPLES)
+        expand("/home/zhuosl/CE_WGS/main/Genome_assembly/prokka_{sample}/contigs.fasta", sample=CONTIGS)
 
-rule annotate_genome:
+rule assemble_genome:
     message:
-        "de novo assembly CE_isolates using SPADES"
+        "CE_isolates WGS using prokka"
     input:
-        R1 = "/home/zhuosl/CE_WGS/main/raw_data/{sample}_R1_001.fastq.gz",
-        R2 = "/home/zhuosl/CE_WGS/main/raw_data/{sample}_R2_001.fastq.gz"
+        R1 = "/home/zhuosl/CE_WGS/main/Genome_assembly/{sample}/{sample}.fasta",
     output:
         contigs = "/home/zhuosl/CE_WGS/main/Genome_assembly/spades_{sample}/contigs.fasta"
     params:
@@ -43,3 +42,26 @@ rule annotate_genome:
         """ 
         spades.py -1 {input.R1} -2 {input.R2} -o {params.outdir} -t {threads} --only-assembler --careful
         """
+
+rule annotate:
+    input:
+        expand("/home/zhuosl/CE_WGS/main/Genome_annotation/prokka_{sample}/{sample}.gff", sample= CONTIGS)
+
+rule annotate_genome:
+    message:
+        "Annotate downloaded Vibrio parahaemolyticus COMPLETE genome using prokka"
+    input:
+        "/home/zhuosl/CE_WGS/main/Genome_contig/{sample}.fasta"
+    output:
+        "/home/zhuosl/CE_WGS/main/Genome_annotation/prokka_{sample}/{sample}.gff"
+    params:
+        outdir = "/home/zhuosl/CE_WGS/main/Genome_annotation/prokka_{sample}",
+        sample = "{sample}"
+    threads: 32
+    conda:
+        "/home/zhuosl/VPML/Genome/prokka.yml"
+
+    shell:
+     """ 
+        prokka --kingdom Bacteria --outdir {params.outdir} --prefix {params.sample} --locustag {params.sample} --force {input}
+     """ 
